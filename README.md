@@ -1,21 +1,32 @@
 ## REST service for a merchant to add offers on their products.
 
-## To run the service:
+#### To run the service:
+```
 ./gradlew bootRun
+```
 
-## To list all offers:
+#### To list all offers:
+```
 curl -X GET http://localhost:8080/offer -H 'Cache-Control: no-cache' 
+```
 
-## To list one offer:
+#### To list one offer:
+```
 curl -X GET http://localhost:8080/offer/7<ID> -H 'Cache-Control: no-cache'
+```
 
-## To list all products:
+#### To list all products:
+```
 curl -X GET http://localhost:8080/product -H 'Cache-Control: no-cache' 
+```
 
-## To list one product:
+#### To list one product:
+```
 curl -X GET http://localhost:8080/product/i<ID> -H 'Cache-Control: no-cache'
+```
 
-## To add a product:
+#### To add a product:
+```
 curl -X POST \
   http://localhost:8080/product \
   -H 'Cache-Control: no-cache' \
@@ -23,8 +34,10 @@ curl -X POST \
   -F 'name=A product' \
   -F currency=GBP \
   -F price=100
+```
 
-## To add an offer:
+#### To add an offer:
+```
 curl -X POST \
   http://localhost:8080/offer \
   -H 'Cache-Control: no-cache' \
@@ -35,13 +48,17 @@ curl -X POST \
   -F price=100 \
   -F startTime=2018-01-21 \
   -F endTime=2029-01-10 \
+```
 
-## To list offers by product ID:
+#### To list offers by product ID:
+```
 curl -X GET \
   http://localhost:8080/product/<ID>/offers \
   -H 'Cache-Control: no-cache' \
+```
 
-## To cancel an offer:
+#### To cancel an offer:
+```
 curl -X DELETE \
   http://localhost:8080/offer/<ID> -H 'Cache-Control: no-cache'
-
+```
