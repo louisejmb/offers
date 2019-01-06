@@ -14,7 +14,7 @@ public interface OfferService {
 
     Offer getById(Long id);
 
-    void createNew(long productId, String description, String currency, int price, LocalDate startTime, LocalDate endTime, boolean status);
+    void createNew(long productId, String description, String currency, int price, LocalDate startTime, LocalDate endTime);
 
     void cancelOffer(long id);
 }

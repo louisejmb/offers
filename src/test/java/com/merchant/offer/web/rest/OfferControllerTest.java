@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.mockito.BDDMockito.*;
 
 import com.merchant.offer.domain.Offer;
+import com.merchant.offer.domain.Product;
 import com.merchant.offer.service.OfferService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,30 +38,47 @@ public class OfferControllerTest {
     private OfferController offerController;
 
     String exampleListOfferJson = "[{\n" +
+            "    \"id\": 0,\n" +
+            "    \"product\": {\n" +
             "        \"id\": 0,\n" +
-            "        \"productId\": 1,\n" +
-            "        \"description\": \"Half price Jelly\",\n" +
+            "        \"name\": \"Jelly\",\n" +
             "        \"currency\": \"GBP\",\n" +
-            "        \"price\": 100,\n" +
-            "        \"startTime\": \"2019-01-01\",\n" +
-            "        \"endTime\": \"2019-01-31\"}]";
+            "        \"price\": 99\n" +
+            "    },\n" +
+            "    \"description\": \"Half price Jelly.\",\n" +
+            "    \"currency\": \"GBP\",\n" +
+            "    \"price\": 100,\n" +
+            "    \"startTime\": \"2019-01-01\",\n" +
+            "    \"endTime\": \"2019-01-31\",\n" +
+            "    \"status\": \"ACTIVE\"\n" +
+            "}]";
 
-    String exampleOfferJson = "{\"id\": 0,\n" +
-            "        \"productId\": 1,\n" +
-            "        \"description\": \"Half price Jelly\",\n" +
+    String exampleOfferJson = "{\n" +
+            "    \"id\": 0,\n" +
+            "    \"product\": {\n" +
+            "        \"id\": 0,\n" +
+            "        \"name\": \"Jelly\",\n" +
             "        \"currency\": \"GBP\",\n" +
-            "        \"price\": 100,\n" +
-            "        \"startTime\": \"2019-01-01\",\n" +
-            "        \"endTime\": \"2019-01-31\"}";
+            "        \"price\": 99\n" +
+            "    },\n" +
+            "    \"description\": \"Half price Jelly.\",\n" +
+            "    \"currency\": \"GBP\",\n" +
+            "    \"price\": 100,\n" +
+            "    \"startTime\": \"2019-01-01\",\n" +
+            "    \"endTime\": \"2019-01-31\",\n" +
+            "    \"status\": \"ACTIVE\"\n" +
+            "}";
+
+    Product testProduct = new Product("Jelly", "GBP", 99);
 
     Offer testOffer = new Offer(
-            1,
-            "Half price Jelly",
+            testProduct,
+            "Half price Jelly.",
             "GBP",
             100,
             LocalDate.of(2019,1, 1),
-            LocalDate.of(2019,1, 31),
-            false);
+            LocalDate.of(2019,1, 31)
+    );
 
     @Test
     public void listAllOffersTest() throws Exception {

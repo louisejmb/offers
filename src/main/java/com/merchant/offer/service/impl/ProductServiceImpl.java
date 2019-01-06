@@ -1,6 +1,9 @@
 package com.merchant.offer.service.impl;
 
+import com.merchant.offer.domain.Offer;
 import com.merchant.offer.domain.Product;
+import com.merchant.offer.exception.OffersExistException;
+import com.merchant.offer.repository.OfferRepository;
 import com.merchant.offer.repository.ProductRepository;
 import com.merchant.offer.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OfferRepository offerRepository;
 
     @Override
     public List<Product> listAll() {
@@ -31,6 +37,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public void deleteById(long id) {
-        productRepository.deleteById(id);
+        List<Offer> o = offerRepository.findByProductId(id);
+
+        if(o.isEmpty()) {
+            productRepository.deleteById(id);
+        } else {
+            throw new OffersExistException("Can't delete product, offers exist");
+        }
     }
 }

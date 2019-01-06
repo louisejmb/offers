@@ -3,9 +3,11 @@ package com.merchant.offer.service.impl;
 import static org.junit.Assert.*;
 
 import com.merchant.offer.domain.Offer;
+import com.merchant.offer.domain.Product;
 import com.merchant.offer.exception.InvalidDateException;
 import com.merchant.offer.exception.ResourceNotFoundException;
 import com.merchant.offer.repository.OfferRepository;
+import com.merchant.offer.repository.ProductRepository;
 import com.merchant.offer.service.OfferService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,17 +29,21 @@ public class OfferServiceImplTest {
     @MockBean
     private OfferRepository offerRepository;
 
+    @MockBean
+    private ProductRepository productRepository;
+
     @Autowired
     private OfferService offerService;
 
+    Product p = new Product("Box of large tissues", "GBP", 89);
+
     Offer testValidOffer = new Offer(
-            1,
+            p,
             "20% off Coffee",
             "GBP",
             100,
             LocalDate.of(2019,1, 1),
-            LocalDate.of(2019,1, 31),
-            false
+            LocalDate.of(2019,1, 31)
     );
 
     @Test
@@ -60,27 +66,27 @@ public class OfferServiceImplTest {
 
     @Test
     public void createNewValidDateTest() throws Exception {
+        Mockito.when(productRepository.findById((long)1)).thenReturn(Optional.of(p));
         offerService.createNew(
-            100,
+            1,
             "15% off cups",
             "GBP",
             100,
             LocalDate.of(2019, 01,1),
-            LocalDate.of(2099, 01, 31),
-            false
+            LocalDate.of(2099, 01, 31)
         );
     }
 
     @Test(expected = InvalidDateException.class)
     public void createNewInvalidDateTest() throws Exception {
+        Mockito.when(productRepository.findById((long)1)).thenReturn(Optional.of(p));
         offerService.createNew(
-                100,
+                1,
                 "15% off cups",
                 "GBP",
                 100,
                 LocalDate.of(2018, 01,01),
-                LocalDate.of(2018, 01, 31),
-                false
+                LocalDate.of(2018, 01, 31)
         );
     }
 

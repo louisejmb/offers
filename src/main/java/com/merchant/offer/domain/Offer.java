@@ -22,8 +22,9 @@ public class Offer {
     @Column
     private long id;
 
-    @Column
-    private long productId;
+    @ManyToOne
+    @JoinColumn(name = "productId")
+    private Product product;
 
     @Column
     private String description;
@@ -50,8 +51,8 @@ public class Offer {
 
     }
 
-    public Offer(long productId, String description, String currency, int price, LocalDate startTime, LocalDate endTime, boolean cancelled) {
-        this.productId = productId;
+    public Offer(Product product, String description, String currency, int price, LocalDate startTime, LocalDate endTime) {
+        this.product = product;
         this.description = description;
         this.currency = currency;
         this.price = price;
@@ -68,12 +69,12 @@ public class Offer {
         this.id = id;
     }
 
-    public long getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(long productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public String getDescription() {

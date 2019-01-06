@@ -1,9 +1,11 @@
 package com.merchant.offer.service.impl;
 
 import com.merchant.offer.domain.Offer;
+import com.merchant.offer.domain.Product;
 import com.merchant.offer.exception.InvalidDateException;
 import com.merchant.offer.exception.ResourceNotFoundException;
 import com.merchant.offer.repository.OfferRepository;
+import com.merchant.offer.repository.ProductRepository;
 import com.merchant.offer.service.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,9 @@ import java.util.Optional;
 
 @Service
 public class OfferServiceImpl implements OfferService {
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @Autowired
     private OfferRepository offerRepository;
@@ -37,13 +42,20 @@ public class OfferServiceImpl implements OfferService {
         }
     }
 
-    public void createNew(long productId, String description, String currency, int price, LocalDate startTime, LocalDate endTime, boolean cancelled) {
+    public void createNew(long productId, String description, String currency, int price, LocalDate startTime, LocalDate endTime) {
 
-        if(endTime.isBefore(LocalDate.now())) {
-            throw new InvalidDateException("End date is in the past");
+        Optional<Product> p = productRepository.findById(productId);
+
+        if (p.isPresent()) {
+
+            if (endTime.isBefore(LocalDate.now())) {
+                throw new InvalidDateException("End date is in the past");
+            }
+
+            offerRepository.save(new Offer(p.get(), description, currency, price, startTime, endTime));
+        } else {
+            throw new ResourceNotFoundException("Product not found");
         }
-
-        offerRepository.save(new Offer(productId, description, currency, price, startTime, endTime, cancelled));
     }
 
     public void cancelOffer(long id) {

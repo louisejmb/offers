@@ -40,10 +40,9 @@ public class OfferController {
             @RequestParam(value = "currency") String currency,
             @RequestParam(value = "price") int price,
             @RequestParam(value = "startTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startTime,
-            @RequestParam(value = "endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endTime,
-            @RequestParam(value = "cancelled", required = false) boolean cancelled) {
+            @RequestParam(value = "endTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endTime) {
 
-        offerService.createNew(productId, description, currency, price, startTime, endTime, cancelled);
+        offerService.createNew(productId, description, currency, price, startTime, endTime);
     }
 
     @RequestMapping(value = "/offer/{id}", method = RequestMethod.DELETE)

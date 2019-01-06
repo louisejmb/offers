@@ -3,6 +3,7 @@ package com.merchant.offer.service.impl;
 import static org.junit.Assert.*;
 
 import com.merchant.offer.domain.Product;
+import com.merchant.offer.repository.OfferRepository;
 import com.merchant.offer.repository.ProductRepository;
 import com.merchant.offer.service.ProductService;
 import org.junit.Test;
@@ -23,6 +24,9 @@ public class ProductServiceImplTest {
 
     @MockBean
     private ProductRepository productRepository;
+
+    @MockBean
+    private OfferRepository offerRepository;
 
     @Autowired
     private ProductService productService;
