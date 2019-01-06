@@ -7,22 +7,22 @@
 
 #### To list all offers:
 ```
-curl -X GET http://localhost:8080/offer' 
+curl -X GET http://localhost:8080/offer
 ```
 
-#### To list one offer:
+#### To get one offer:
 ```
-curl -X GET http://localhost:8080/offer/<ID>'
+curl -X GET http://localhost:8080/offer/<ID>
 ```
 
 #### To list all products:
 ```
-curl -X GET http://localhost:8080/product' 
+curl -X GET http://localhost:8080/product
 ```
 
 #### To get one product:
 ```
-curl -X GET http://localhost:8080/product/<ID>'
+curl -X GET http://localhost:8080/product/<ID>
 ```
 
 #### To add a product:
