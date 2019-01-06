@@ -29,17 +29,17 @@ curl -X GET http://localhost:8080/product/<ID>
 ```
 curl -X POST \
   http://localhost:8080/product \
-  -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+  -H 'content-type: multipart/form-data' \
   -F 'name=A product' \
   -F currency=GBP \
   -F price=100
 ```
 
-#### To add an offer:
+#### To add an offer:
 ```
 curl -X POST \
   http://localhost:8080/offer \
-  -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+  -H 'content-type: multipart/form-data' \
   -F productId=1 \
   -F 'description=New offer' \
   -F currency=GBP \
