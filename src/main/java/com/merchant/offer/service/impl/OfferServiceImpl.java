@@ -2,6 +2,7 @@ package com.merchant.offer.service.impl;
 
 import com.merchant.offer.domain.Offer;
 import com.merchant.offer.domain.Product;
+import com.merchant.offer.exception.FieldValidationException;
 import com.merchant.offer.exception.InvalidDateException;
 import com.merchant.offer.exception.ResourceNotFoundException;
 import com.merchant.offer.repository.OfferRepository;
@@ -47,6 +48,14 @@ public class OfferServiceImpl implements OfferService {
         Optional<Product> p = productRepository.findById(productId);
 
         if (p.isPresent()) {
+
+            if(price < 1) {
+                throw new FieldValidationException("Price should be > 0");
+            }
+
+            if(currency.length() != 3 || currency.matches("[a-zA-Z+]")) {
+                throw new FieldValidationException("Currency is not valid");
+            }
 
             if (endTime.isBefore(LocalDate.now())) {
                 throw new InvalidDateException("End date is in the past");

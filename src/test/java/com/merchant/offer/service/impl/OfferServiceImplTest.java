@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import com.merchant.offer.domain.Offer;
 import com.merchant.offer.domain.Product;
+import com.merchant.offer.exception.FieldValidationException;
 import com.merchant.offer.exception.InvalidDateException;
 import com.merchant.offer.exception.ResourceNotFoundException;
 import com.merchant.offer.repository.OfferRepository;
@@ -87,6 +88,32 @@ public class OfferServiceImplTest {
                 100,
                 LocalDate.of(2018, 01,01),
                 LocalDate.of(2018, 01, 31)
+        );
+    }
+
+    @Test(expected = FieldValidationException.class)
+    public void createNewInvalidPriceTest() throws Exception {
+        Mockito.when(productRepository.findById((long)1)).thenReturn(Optional.of(p));
+        offerService.createNew(
+                1,
+                "15% off cups",
+                "GBP",
+                -100,
+                LocalDate.of(2018, 01,01),
+                LocalDate.of(2028, 01, 31)
+        );
+    }
+
+    @Test(expected = FieldValidationException.class)
+    public void createNewInvalidCurrencyTest() throws Exception {
+        Mockito.when(productRepository.findById((long)1)).thenReturn(Optional.of(p));
+        offerService.createNew(
+                1,
+                "15% off cups",
+                "1GBP",
+                -100,
+                LocalDate.of(2018, 01,01),
+                LocalDate.of(2028, 01, 31)
         );
     }
 
